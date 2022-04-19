@@ -1,0 +1,130 @@
+[33mcommit 91dca3a4accf5f50cb714027a107bc8c62073b24[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Rajat <Rajat2849@gmail.com>
+Date:   Tue Apr 19 04:24:26 2022 +0000
+
+    This is a Calculator
+
+[1mdiff --git a/Calculator.java b/Calculator.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..3c67e0e[m
+[1m--- /dev/null[m
+[1m+++ b/Calculator.java[m
+[36m@@ -0,0 +1,118 @@[m
+[32m+[m[32m/*********************************************  Save this file as MyCalculator.java to compile it use  javac MyCalculator.java to use the calcuator do this  java[m[41m [m
+[32m+[m[32mMyCalculator   **********************************************/ import java.awt.*;   import java.awt.event.*; /*********************************************/  [m[41m [m
+[32m+[m[32mpublic class MyCalculator extends Frame   {    public boolean setClear=true; double number, memValue;   char op;    String digitButtonText[] = {"7", "8", "9", "4", "5",[m[41m [m
+[32m+[m[32m"6", "1", "2", "3", "0", "+/-", "." }; String operatorButtonText[] = {"/", "sqrt", "*", "%", "-", "1/X", "+", "=" };   String memoryButtonText[] = {"MC", "MR", "MS",[m[41m [m
+[32m+[m[32m"M+" }; String specialButtonText[] = {"Backspc", "C", "CE" };   MyDigitButton digitButton[]=new MyDigitButton[digitButtonText.length];   MyOperatorButton[m[41m [m
+[32m+[m[32moperatorButton[]=new MyOperatorButton[operatorButtonText.length]; MyMemoryButton memoryButton[]=new MyMemoryButton[memoryButtonText.length];   MySpecialButton[m[41m [m
+[32m+[m[32mspecialButton[]=new MySpecialButton[specialButtonText.length];    Label displayLabel=new Label("0",Label.RIGHT); Label memLabel=new Label(" ",Label.RIGHT);  [m[41m [m
+[32m+[m[32mfinal int FRAME_WIDTH=325,FRAME_HEIGHT=325;   final int HEIGHT=30, WIDTH=30, H_SPACE=10,V_SPACE=10; final int TOPX=30, TOPY=50;  [m
+[32m+[m[32m///////////////////////////[m
+[32m+[m[32mMyCalculator(String frameText)//constructor   { super(frameText);   int tempX=TOPX, y=TOPY;   displayLabel.setBounds(tempX,y,240,HEIGHT);[m[41m [m
+[32m+[m[32mdisplayLabel.setBackground(Color.BLUE);   displayLabel.setForeground(Color.WHITE); add(displayLabel);   memLabel.setBounds(TOPX,  TOPY+HEIGHT+ V_SPACE,WIDTH, HEIGHT);  [m[41m [m
+[32m+[m[32madd(memLabel);   [m
+[32m+[m[32m// set Co-ordinates for Memory Buttons[m
+[32m+[m[32mtempX=TOPX;    y=TOPY+2*(HEIGHT+V_SPACE); for(int i=0; i<memoryButton.length; i++)   {[m[41m [m
+[32m+[m[32mmemoryButton[i]=new MyMemoryButton(tempX,y,WIDTH,HEIGHT,memoryButtonText[i], this);   memoryButton[i].setForeground(Color.RED); y+=HEIGHT+V_SPACE;  [m
+[32m+[m[32m}[m
+[32m+[m[32m  [m
+[32m+[m[32m//set Co-ordinates for Special Buttons[m
+[32m+[m[32mtempX=TOPX+1*(WIDTH+H_SPACE); y=TOPY+1*(HEIGHT+V_SPACE);   for(int i=0;i<specialButton.length;i++) {   specialButton[i]=new[m[41m [m
+[32m+[m[32mMySpecialButton(tempX,y,WIDTH*2,HEIGHT,specialButtonText[i], this); specialButton[i].setForeground(Color.RED);   tempX=tempX+2*WIDTH+H_SPACE;[m
+[32m+[m[32m}  [m
+[32m+[m[32m//set Co-ordinates for Digit Buttons  [m
+[32m+[m[32mint digitX=TOPX+WIDTH+H_SPACE; int digitY=TOPY+2*(HEIGHT+V_SPACE);   tempX=digitX; y=digitY; for(int i=0;i<digitButton.length;i++)   {[m[41m [m
+[32m+[m[32mdigitButton[i]=new MyDigitButton(tempX,y,WIDTH,HEIGHT,digitButtonText[i], this);   digitButton[i].setForeground(Color.BLUE); tempX+=WIDTH+H_SPACE;  [m[41m [m
+[32m+[m[32mif((i+1)%3==0){tempX=digitX; y+=HEIGHT+V_SPACE;}[m
+[32m+[m[32m}  [m
+[32m+[m[32m//set Co-ordinates for Operator Buttons  [m
+[32m+[m[32mint opsX=digitX+2*(WIDTH+H_SPACE)+H_SPACE; int opsY=digitY;   tempX=opsX; y=opsY; for(int i=0;i<operatorButton.length;i++)   { tempX+=WIDTH+H_SPACE;  [m[41m [m
+[32m+[m[32moperatorButton[i]=new MyOperatorButton(tempX,y,WIDTH,HEIGHT,operatorButtonText[i], this); operatorButton[i].setForeground(Color.RED);   if((i+1)%2==0){tempX=opsX;[m[41m [m
+[32m+[m[32my+=HEIGHT+V_SPACE;}[m
+[32m+[m[32m}  [m
+[32m+[m[32maddWindowListener(new WindowAdapter()   { public void windowClosing(WindowEvent ev)   {System.exit(0);}[m
+[32m+[m[32m});  [m
+[32m+[m[32msetLayout(null);   setSize(FRAME_WIDTH,FRAME_HEIGHT); setVisible(true);  [m
+[32m+[m[32m}[m
+[32m+[m[32m//////////////////////////////////  [m
+[32m+[m[32mstatic String getFormattedText(double temp) {   String resText=""+temp; if(resText.lastIndexOf(".0")>0)   resText=resText.substring(0,resText.length()-2);[m[41m [m
+[32m+[m[32mreturn resText;  [m
+[32m+[m[32m}[m
+[32m+[m[32m////////////////////////////////////////  [m
+[32m+[m[32mpublic static void main(String []args) {   new MyCalculator("Calculator - JavaTpoint");[m
+[32m+[m[32m}  [m
+[32m+[m[32m}[m
+[32m+[m[32m   /*******************************************/    class MyDigitButton extends Button implements ActionListener {   MyCalculator cl;   [m
+[32m+[m[32m//////////////////////////////////////////[m
+[32m+[m[32mMyDigitButton(int x,int y, int width,int height,String cap, MyCalculator clc)   { super(cap);   setBounds(x,y,width,height); this.cl=clc;   this.cl.add(this);[m[41m [m
+[32m+[m[32maddActionListener(this);  [m
+[32m+[m[32m}[m
+[32m+[m[32m////////////////////////////////////////////////  [m
+[32m+[m[32mstatic boolean isInString(String s, char ch) {   for(int i=0; i<s.length();i++) if(s.charAt(i)==ch) return true; return false;  [m
+[32m+[m[32m}[m
+[32m+[m[32m/////////////////////////////////////////////////  [m
+[32m+[m[32mpublic void actionPerformed(ActionEvent ev) {   String tempText=((MyDigitButton)ev.getSource()).getLabel();    if(tempText.equals(".")) {   if(cl.setClear)[m[41m [m
+[32m+[m[32m    {cl.displayLabel.setText("0.");cl.setClear=false;}   else if(!isInString(cl.displayLabel.getText(),'.'))[m[41m [m
+[32m+[m[32m    cl.displayLabel.setText(cl.displayLabel.getText()+".");   return;[m
+[32m+[m[32m}  [m
+[32m+[m[32mint index=0;   try{         index=Integer.parseInt(tempText);  [m
+[32m+[m[32m}catch(NumberFormatException e){return;}[m
+[32m+[m[32m   if (index==0 && cl.displayLabel.getText().equals("0")) return;    if(cl.setClear)             {cl.displayLabel.setText(""+index);cl.setClear=false;}   else[m[41m [m
+[32m+[m[32m    cl.displayLabel.setText(cl.displayLabel.getText()+index);  [m
+[32m+[m[32m}//actionPerformed class defination  [m
+[32m+[m[32m/********************************************/   class MyOperatorButton extends Button implements ActionListener   { MyCalculator cl;  [m[41m [m
+[32m+[m[32mMyOperatorButton(int x,int y, int width,int height,String cap, MyCalculator clc)   { super(cap);   setBounds(x,y,width,height); this.cl=clc;   this.cl.add(this);[m[41m [m
+[32m+[m[32maddActionListener(this);  [m
+[32m+[m[32m}[m
+[32m+[m[32m///////////////////////  [m
+[32m+[m[32mpublic void actionPerformed(ActionEvent ev) {   String opText=((MyOperatorButton)ev.getSource()).getLabel();    cl.setClear=true;[m[41m [m
+[32m+[m[32mdouble temp=Double.parseDouble(cl.displayLabel.getText());   if(opText.equals("1/x"))   {     try   {double tempd=1/(double)temp;[m[41m [m
+[32m+[m[32m        cl.displayLabel.setText(MyCalculator.getFormattedText(tempd));}   catch(ArithmeticException excp)[m[41m [m
+[32m+[m[32m                        {cl.displayLabel.setText("Divide by 0.");}   return;     }   if(opText.equals("sqrt"))     {   try         {double tempd=Math.sqrt(temp);  [m[41m [m
+[32m+[m[32mcl.displayLabel.setText(MyCalculator.getFormattedText(tempd));}             catch(ArithmeticException excp)   {cl.displayLabel.setText("Divide by 0.");}     return;  [m
+[32m+[m[32m}[m
+[32m+[m[32mif(!opText.equals("="))   {     cl.number=temp;   cl.op=opText.charAt(0);     return;  [m
+[32m+[m[32m}[m
+[32m+[m[32m// process = button pressed  [m
+[32m+[m[32mswitch(cl.op) {   case '+':     temp+=cl.number;break;   case '-':     temp=cl.number-temp;break;   case '*':     temp*=cl.number;break;   case '%':[m[41m [m
+[32m+[m[32m    try{temp=cl.number%temp;}   catch(ArithmeticException excp)         {cl.displayLabel.setText("Divide by 0."); return;}   break; case '/':  [m[41m [m
+[32m+[m[32mtry{temp=cl.number/temp;}         catch(ArithmeticException excp)   {cl.displayLabel.setText("Divide by 0."); return;}     break;  [m
+[32m+[m[32m}//switch[m
+[32m+[m[32m   cl.displayLabel.setText(MyCalculator.getFormattedText(temp));[m
+[32m+[m[32m//cl.number=temp;  [m
+[32m+[m[32m}//actionPerformed class  [m
+[32m+[m[32m/****************************************/   class MyMemoryButton extends Button implements ActionListener   { MyCalculator cl;  [m
+[32m+[m[32m/////////////////////////////////  [m
+[32m+[m[32mMyMemoryButton(int x,int y, int width,int height,String cap, MyCalculator clc) {   super(cap); setBounds(x,y,width,height);   this.cl=clc; this.cl.add(this);  [m[41m [m
+[32m+[m[32maddActionListener(this);[m
+[32m+[m[32m}  [m
+[32m+[m[32m////////////////////////////////////////////////[m
+[32m+[m[32mpublic void actionPerformed(ActionEvent ev)   { char memop=((MyMemoryButton)ev.getSource()).getLabel().charAt(1);   cl.setClear=true;   double[m[41m [m
+[32m+[m[32mtemp=Double.parseDouble(cl.displayLabel.getText());    switch(memop) {   case 'C':     cl.memLabel.setText(" ");cl.memValue=0.0;break;   case 'R':[m[41m [m
+[32m+[m[32m    cl.displayLabel.setText(MyCalculator.getFormattedText(cl.memValue));break;   case 'S':     cl.memValue=0.0;   case '+':[m[41m [m
+[32m+[m[32m    cl.memValue+=Double.parseDouble(cl.displayLabel.getText());   if(cl.displayLabel.getText().equals("0") || cl.displayLabel.getText().equals("0.0") )[m[41m [m
+[32m+[m[32m        cl.memLabel.setText(" ");   else         cl.memLabel.setText("M");      break;[m
+[32m+[m[32m}//switch   actionPerformed class  [m
+[32m+[m[32m/*****************************************/   class MySpecialButton extends Button implements ActionListener   { MyCalculator cl;  [m[41m [m
+[32m+[m[32mMySpecialButton(int x,int y, int width,int height,String cap, MyCalculator clc)   { super(cap);   setBounds(x,y,width,height); this.cl=clc;   this.cl.add(this);[m[41m [m
+[32m+[m[32maddActionListener(this);  [m
+[32m+[m[32m}[m
+[32m+[m[32m//////////////////////  [m
+[32m+[m[32mstatic String backSpace(String s) {   String Res=""; for(int i=0; i<s.length()-1; i++) Res+=s.charAt(i);   return Res;[m
+[32m+[m[32m}  [m
+[32m+[m[32m//////////////////////////////////////////////////////////  [m
+[32m+[m[32mpublic void actionPerformed(ActionEvent ev) {   String opText=((MySpecialButton)ev.getSource()).getLabel();[m
+[32m+[m[32m//check for backspace button  [m
+[32m+[m[32mif(opText.equals("Backspc")) {   String tempText=backSpace(cl.displayLabel.getText()); if(tempText.equals(""))    cl.displayLabel.setText("0"); else   [m[41m [m
+[32m+[m[32mcl.displayLabel.setText(tempText); return;  [m
+[32m+[m[32m}[m
+[32m+[m[32m//check for "C" button i.e. Reset  [m
+[32m+[m[32mif(opText.equals("C")) {   cl.number=0.0; cl.op=' '; cl.memValue=0.0; cl.memLabel.setText(" ");  [m
+[32m+[m[32m}[m
+[32m+[m[32m  [m
+[32m+[m[32m//it must be CE button pressed[m
+[32m+[m[32mcl.displayLabel.setText("0");cl.setClear=true;  [m
+[32m+[m[32m}//actionPerformed class  [m
+[32m+[m[32m/*********************************************  Features not implemented and few bugs   i) No coding done for "+/-" button. ii) Menubar is not included.  iii)Not for[m[41m [m
+[32m+[m[32mScientific calculation iv)Some of the computation may lead to unexpected result  due to the representation of Floating point numbers in computer[m[41m [m
+[32m+[m[32m   is an approximation to the given value that can be stored  physically in memory.[m
+[32m+[m[32m***********************************************/  [m
